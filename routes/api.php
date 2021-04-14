@@ -15,7 +15,4 @@ use App\Http\Controllers\TweetController;
 |
 */
 
-Route::post('/tweetpost', [TweetController::class, 'post']);
-Route::get('/tweetget',[TweetController::class,'get']);
-Route::delete('/tweetdelete',[TweetController::class,
-'destory']);
+Route::apiResource('/tweet',TweetController::class);
