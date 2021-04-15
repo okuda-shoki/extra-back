@@ -46,9 +46,9 @@ class TweetController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function show(Tweet $Tweet)
+    public function show(Tweet $tweet)
     {
-        $text=DB::table('tweet')->where('text',$Tweet->text)->get();
+        $text=DB::table('tweet')->where('text',$tweet->text)->first();
         $texts=[
             "text"=>$text
         ];
@@ -62,11 +62,10 @@ class TweetController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tweet $Tweet)
+    public function update(Request $request, Tweet $tweet)
     {
-        $item = Tweet::where('id', $Tweet->id)->first();
-        $item->name = $request->name;
-        $item->email = $request->email;
+        $item = Tweet::where('id', $tweet->id)->first();
+        $item->text = $request->text;
         $item->save();
         if ($item) {
             return response()->json([
@@ -85,9 +84,9 @@ class TweetController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tweet $contact)
+    public function destroy(Tweet $tweet)
     {
-        $item = Tweet::where('id', $contact->id)->delete();
+        $item = Tweet::where('id', $tweet->id)->delete();
         if ($item) {
             return response()->json([
                 'message' => $item,
