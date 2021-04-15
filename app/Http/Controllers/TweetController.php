@@ -39,7 +39,7 @@ class TweetController extends Controller
             'data' => $item
         ], 200);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -62,22 +62,7 @@ class TweetController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tweet $tweet)
-    {
-        $item = Tweet::where('id', $tweet->id)->first();
-        $item->text = $request->text;
-        $item->save();
-        if ($item) {
-            return response()->json([
-                'message' => $item,
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Not found',
-            ], 404);
-        }
-    }
-
+   
     /**
      * Remove the specified resource from storage.
      *
