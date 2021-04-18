@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Tweet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TweetController extends Controller
 
@@ -32,7 +31,7 @@ class TweetController extends Controller
     public function store(Request $request)
     {
         $item = new Tweet;
-        $item->text = $request->text;
+        $item->name = $request->name;
         $item->save();
         return response()->json([
             'message' => 'Created successfully',
@@ -48,11 +47,7 @@ class TweetController extends Controller
      */
     public function show(Tweet $tweet)
     {
-        $text=DB::table('tweet')->where('text',$tweet->text)->first();
-        $texts=[
-            "text"=>$text
-        ];
-        return response()->json($texts,200);
+       
     }
 
     /**
@@ -62,7 +57,22 @@ class TweetController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-   
+    public function update(Request $request, Tweet $tweet)
+    {
+        $item = Tweet::where('id', $tweet->id)->first();
+        $item->name = $request->name;
+        $item->save();
+        if ($item) {
+            return response()->json([
+                'message' => $item,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not found',
+            ], 404);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
